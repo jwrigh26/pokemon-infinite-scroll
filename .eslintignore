@@ -1,0 +1,12 @@
+node_modules/*
+package.json
+package-lock.json
+README.md
+webpack.config.js
+yarn.lock
+.babelrc
+.eslintrc.js
+.gitignore
+.prettierrc
+./node_modules/**
+**/node_modules/**

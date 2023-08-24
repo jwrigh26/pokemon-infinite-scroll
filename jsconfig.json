@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+      "target": "es6",
+      "paths": {
+        "assets": ["./assets"],
+        "components": ["./components"],
+        "config": ["./config"],
+        "constants": ["./constants"],
+        "context": ["./context"],
+        "helpers": ["./helpers"],
+        "hooks": ["./hooks"],
+        "layout": ["./layouts"],
+        "models": ["./models"],
+        "modules": ["./modules"],
+        "providers": ["./providers"],
+        "services": ["./services"],
+        "styles": ["./styles"],
+        "store": ["./store"],
+        "api": ["./api"],
+        "validation": ["./validation"],
+      }
+    }
+  }
