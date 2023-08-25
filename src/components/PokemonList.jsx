@@ -102,7 +102,7 @@ const Grid = styled(Box)(({ theme }) => ({
 const PokemonCard = styled(Card)(({ theme }) => ({
   flex: '0 0 auto',
   width: '100%',
-  height: 'min(30svh, 420px)',
+  height: 'min(40svh, 420px)',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
