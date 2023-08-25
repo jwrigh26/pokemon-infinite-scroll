@@ -15,10 +15,6 @@ export default function Button({
 
   return (
     <LoadingButton
-      disableRipple
-      disableFocusRipple
-      disableTouchRipple
-      disableElevation
       loading={loading}
       variant={variant}
       sx={{ ...theme.shape.button, ...sx }}

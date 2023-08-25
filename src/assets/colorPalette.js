@@ -55,9 +55,6 @@ export const palette = {
   },
 };
 
-
-
-
 export const brigtherPurpleTheme = {
   primary: {
     light: '#9b75d1',

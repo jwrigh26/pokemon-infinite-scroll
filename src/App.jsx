@@ -27,12 +27,9 @@ export default App;
 // App Styled Components
 const Main = styled((props) => <Box component="main" {...props} />)(
   ({ theme }) => ({
-    backgroundColor: theme.palette.background.paper,
     flexGrow: 1,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'bottom',
-    backgroundImage: `linear-gradient(to bottom, rgba(255,255,255, 1) 30%, rgba(255,255,255,0) 100%), url(${background})`,
+    backgroundColor: theme.palette.secondary.customScale[50],
+    backgroundImage: `linear-gradient(to bottom, rgba(255,255,255, 1) 0%, rgba(255,255,255,0) 50%)`,
   })
 );
 
