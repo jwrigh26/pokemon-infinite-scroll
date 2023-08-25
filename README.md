@@ -2,7 +2,7 @@
 
 > A web application that allows you to browse through Pokémon with an infinite scrolling feature.
 
-![Pokémon Infinite Scroll Screenshot](./src/assets/screenshot.png)  <!-- Replace with your app screenshot -->
+![Pokémon Infinite Scroll Screenshot](./src/assets/readme-splash.png)  <!-- Replace with your app screenshot -->
 
 ## Features 🌟
 
