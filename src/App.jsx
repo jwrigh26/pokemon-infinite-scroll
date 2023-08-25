@@ -35,7 +35,6 @@ const Main = styled((props) => <Box component="main" id="pokemon-main" {...props
 
 const Header = styled((props) => <Box component="header" {...props} />)(
   ({ theme }) => ({
-    // backgroundColor: theme.palette.primary.main,
     ...theme.shape.backgroundGradient,
   })
 );
@@ -55,17 +54,4 @@ const Root = styled((props) => (
   minHeight: '100svh', // Full viewport height
   margin: '0 auto',
   backgroundColor: theme.palette.background.paper,
-}));
-
-const IntersectionObserver = styled((props) => (
-  <Box id="pokemon-intersection-observer" {...props} />
-))(({ theme }) => ({
-  top: 0,
-  left: 0,
-  right: 0,
-  width: '100%',
-  height: '100svh',
-  zIndex: 0,
-  backgroundColor: 'lightBlue',
-  opacity: 0.75,
 }));

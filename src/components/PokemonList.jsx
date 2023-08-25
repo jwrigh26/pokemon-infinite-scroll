@@ -10,22 +10,39 @@ import LinearProgress from '@mui/material/LinearProgress';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import fallbackImage from 'assets/fallback-image.png';
+
+/**
+ * @component
+ * A React component that displays a list of Pokemon cards.
+ * 
+ * The component leverages hooks, material-ui components, and styled-components.
+ * 
+ * @returns {JSX.Element} A grid layout of Pokemon cards.
+ * 
+ * @example
+ * <PokemonList />
+ */
 export default function PokemonList() {
+  // React state hooks for handling offset and pagination
   const [currentOffset, setCurrentOffset] = useState(0);
 
+  // Custom hook for fetching Pokemon data
   const { data, isLoading, isFetching } = usePokemonQuery({
     offset: currentOffset ?? 0,
-    limit: 5,
+    limit: 20,
   });
   const { pagination, results } = data ?? {};
   const { offset: nextOffset } = pagination?.next ?? { offest: 0 };
 
+  // Custom hook for detecting when an element intersects the viewport
   const [ref, isIntersecting] = useIntersect({
     root: null, // Viewport is the observer root
     rootMargin: '0px 0px 128px 0px',
     threshold: 0,
   });
 
+  // React effect hook to update currentOffset when intersection is detected
   useEffect(() => {
     if (
       !isLoading &&
@@ -33,11 +50,18 @@ export default function PokemonList() {
       isIntersecting &&
       currentOffset != nextOffset
     ) {
-      console.log('Setting current offset:', nextOffset);
+      console.log(`%cSetting offset`, 'color: #7FFFD4', nextOffset);
       setCurrentOffset(nextOffset);
     }
   }, [isLoading, isFetching, isIntersecting, currentOffset, nextOffset]);
 
+  // Function to handle image load errors
+  const handleImageError = (e) => {
+    e.target.onerror = null; // Reset onerror to avoid infinite loop
+    e.target.src = fallbackImage; // Set src to the fallback image
+  };
+
+  // JSX for the Pokemon card list
   return (
     <>
       <Grid>
@@ -49,12 +73,14 @@ export default function PokemonList() {
                 <PokemonImage
                   src={card?.image}
                   alt={`${card?.name}-official-image`}
+                  onError={handleImageError} // Attach error handler
                 />
               </ImageWrapper>
             </CardContent>
           </PokemonCard>
         ))}
       </Grid>
+      {/* This Box is the intersection target for infinite scrolling */}
       <Box
         id="scroll-intersect-target"
         sx={{ width: '100%', height: '1px' }}
@@ -68,6 +94,10 @@ export default function PokemonList() {
     </>
   );
 }
+
+// Additional function components and styled components...
+
+
 
 PokemonList.propTypes = {};
 
@@ -113,6 +143,8 @@ const PokemonCard = styled(Card)(({ theme }) => ({
 const ImageWrapper = styled(Box)(({ theme }) => ({
   position: 'relative',
   overflow: 'hidden',
+  minHeight: '238px',
+  minWidth: '238px',
   maxWidth: '256px',
   padding: theme.spacing(1),
   margin: theme.spacing(1),
