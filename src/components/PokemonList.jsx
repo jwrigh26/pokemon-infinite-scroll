@@ -20,9 +20,9 @@ export default function PokemonList() {
   const { pagination, results } = data ?? {};
   const { offset: nextOffset } = pagination?.next ?? { offest: 0 };
 
-  const [ref, entry] = useIntersect({
-    root: document.getElementById('pokemon-intersection-observer'),
-    rootMargin: '0px 0px 228px 0px',
+  const [ref, isIntersecting] = useIntersect({
+    root: null, // Viewport is the observer root
+    rootMargin: '0px 0px 128px 0px',
     threshold: 0,
   });
 
@@ -30,13 +30,13 @@ export default function PokemonList() {
     if (
       !isLoading &&
       !isFetching &&
-      entry?.isIntersecting &&
+      isIntersecting &&
       currentOffset != nextOffset
     ) {
       console.log('Setting current offset:', nextOffset);
       setCurrentOffset(nextOffset);
     }
-  }, [isLoading, isFetching, entry?.isIntersecting, currentOffset, nextOffset]);
+  }, [isLoading, isFetching, isIntersecting, currentOffset, nextOffset]);
 
   return (
     <>
@@ -57,10 +57,10 @@ export default function PokemonList() {
       </Grid>
       <Box
         id="scroll-intersect-target"
-        sx={{ width: '100%', height: '20px', backgroundColor: 'lime' }}
+        sx={{ width: '100%', height: '1px' }}
         ref={ref}
       />
-      {isFetching && (
+      {isFetching && results?.length > 0 && (
         <Box sx={{ width: '100%' }}>
           <LinearProgress />
         </Box>

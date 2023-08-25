@@ -28,9 +28,8 @@ export default App;
 const Main = styled((props) => <Box component="main" id="pokemon-main" {...props} />)(
   ({ theme }) => ({
     flexGrow: 1,
-    backgroundColor: 'yellow',
-    // backgroundColor: theme.palette.secondary.customScale[50],
-    // backgroundImage: `linear-gradient(to bottom, rgba(255,255,255, 1) 0%, rgba(255,255,255,0) 30%)`,
+    backgroundColor: theme.palette.secondary.customScale[50],
+    backgroundImage: `linear-gradient(to bottom, rgba(255,255,255, 1) 0%, rgba(255,255,255,0) 30%)`,
   })
 );
 
