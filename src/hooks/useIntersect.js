@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 
 export const useIntersect = ({ root = null, rootMargin, threshold = 0 }) => {
   const [entry, updateEntry] = useState({});
-  const [node, setNode] = useState(null);
+  const [node, setNode] = useState();
 
-  const observer = useRef(null);
+  const observer = useRef();
 
   useEffect(() => {
     if (observer.current) observer.current.disconnect();

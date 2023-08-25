@@ -25,11 +25,12 @@ function App() {
 export default App;
 
 // App Styled Components
-const Main = styled((props) => <Box component="main" {...props} />)(
+const Main = styled((props) => <Box component="main" id="pokemon-main" {...props} />)(
   ({ theme }) => ({
     flexGrow: 1,
-    backgroundColor: theme.palette.secondary.customScale[50],
-    backgroundImage: `linear-gradient(to bottom, rgba(255,255,255, 1) 0%, rgba(255,255,255,0) 50%)`,
+    backgroundColor: 'yellow',
+    // backgroundColor: theme.palette.secondary.customScale[50],
+    // backgroundImage: `linear-gradient(to bottom, rgba(255,255,255, 1) 0%, rgba(255,255,255,0) 30%)`,
   })
 );
 
@@ -55,4 +56,17 @@ const Root = styled((props) => (
   minHeight: '100svh', // Full viewport height
   margin: '0 auto',
   backgroundColor: theme.palette.background.paper,
+}));
+
+const IntersectionObserver = styled((props) => (
+  <Box id="pokemon-intersection-observer" {...props} />
+))(({ theme }) => ({
+  top: 0,
+  left: 0,
+  right: 0,
+  width: '100%',
+  height: '100svh',
+  zIndex: 0,
+  backgroundColor: 'lightBlue',
+  opacity: 0.75,
 }));

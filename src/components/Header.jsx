@@ -19,6 +19,8 @@ export default function Header() {
         <Subtitle>Infinite Scroll</Subtitle>
       </Stack>
       <Avatar
+        alt="Pokemon Avatar" 
+        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png"
         sx={{
           cursor: 'pointer',
           ml: 'auto',
@@ -29,9 +31,7 @@ export default function Header() {
             backgroundColor: 'primary.customScale.100',
           },
         }}
-      >
-        AC
-      </Avatar>
+      />
     </HeaderWrapper>
   );
 }

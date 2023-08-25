@@ -1,33 +1,71 @@
+import { useState, useEffect } from 'react';
 import { useIntersect } from 'hooks/useIntersect';
-import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import { usePokemonQuery } from 'services/pokemon';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
+import LinearProgress from '@mui/material/LinearProgress';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 export default function PokemonList() {
-  const { data, isLoading, isFetching } = usePokemonQuery();
+  const [currentOffset, setCurrentOffset] = useState(0);
+
+  const { data, isLoading, isFetching } = usePokemonQuery({
+    offset: currentOffset ?? 0,
+    limit: 5,
+  });
   const { pagination, results } = data ?? {};
+  const { offset: nextOffset } = pagination?.next ?? { offest: 0 };
+
+  const [ref, entry] = useIntersect({
+    root: document.getElementById('pokemon-intersection-observer'),
+    rootMargin: '0px 0px 228px 0px',
+    threshold: 0,
+  });
+
+  useEffect(() => {
+    if (
+      !isLoading &&
+      !isFetching &&
+      entry?.isIntersecting &&
+      currentOffset != nextOffset
+    ) {
+      console.log('Setting current offset:', nextOffset);
+      setCurrentOffset(nextOffset);
+    }
+  }, [isLoading, isFetching, entry?.isIntersecting, currentOffset, nextOffset]);
+
   return (
-    <Grid>
-      {results.map((card, index) => (
-        <PokemonCard key={`${card.name}-${card.id}`}>
-          <CardContent>
-            <PokemonCardHeader name={card?.name} id={card?.id} />
-            <ImageWrapper>
-              <PokemonImage
-                src={card?.image}
-                alt={`${card?.name}-official-image`}
-              />
-            </ImageWrapper>
-          </CardContent>
-        </PokemonCard>
-      ))}
-    </Grid>
+    <>
+      <Grid>
+        {results?.map((card) => (
+          <PokemonCard key={`${card.name}-${card.id}`}>
+            <CardContent>
+              <PokemonCardHeader name={card?.name} id={card?.id} />
+              <ImageWrapper>
+                <PokemonImage
+                  src={card?.image}
+                  alt={`${card?.name}-official-image`}
+                />
+              </ImageWrapper>
+            </CardContent>
+          </PokemonCard>
+        ))}
+      </Grid>
+      <Box
+        id="scroll-intersect-target"
+        sx={{ width: '100%', height: '20px', backgroundColor: 'lime' }}
+        ref={ref}
+      />
+      {isFetching && (
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress />
+        </Box>
+      )}
+    </>
   );
 }
 
@@ -89,7 +127,12 @@ const PokemonImage = styled('img')(({ theme }) => ({
 }));
 
 const HeaderStack = styled((props) => (
-  <Stack direction="row" alignItems="baseline" justifyContent="flex-start" {...props} />
+  <Stack
+    direction="row"
+    alignItems="baseline"
+    justifyContent="flex-start"
+    {...props}
+  />
 ))(({ theme }) => ({
   padding: theme.spacing(2),
 }));

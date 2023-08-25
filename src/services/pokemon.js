@@ -1,5 +1,15 @@
 import { api } from './api';
 
+const pokemonSet = new Map();
+
+const addPokemon = (obj) => {
+  const id = obj.id; // Assuming 'id' is a unique identifier
+  if (!pokemonSet.has(id)) {
+    pokemonSet.set(id, obj);
+  }
+};
+
+
 export const pokemonApi = api.injectEndpoints({
   endpoints: (builder) => ({
     pokemon: builder.query({
@@ -42,6 +52,19 @@ export const pokemonApi = api.injectEndpoints({
             };
           }, {});
 
+        const pokemonList = results?.map(({ name, url }) => {
+          const id = url.split('/')[6];
+          return {
+            id,
+            key: `pokemon-${name}-${id}`,
+            name,
+            thumb: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
+            image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
+          };
+        });
+
+        pokemonList.forEach(addPokemon);
+      
         return {
           pagination: {
             next: nextParams,
@@ -49,22 +72,17 @@ export const pokemonApi = api.injectEndpoints({
             urls: { next, previous },
             count,
           },
-          results: results?.map(({ name, url }) => {
-            const id = url.split('/')[6];
-            return {
-              id,
-              key: `pokemon-${name}-${id}`,
-              name,
-              thumb: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`,
-              image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
-            };
-          }),
+          results: Array.from(pokemonSet.values()),
         };
+          
       },
       providesTags: (result, error, arg) => {
         return [
           // ...result?.results?.map(({ name }) => ({ type: 'Pokemon', id: name })),
-          { type: 'Pokemon', id: 'LIST' },
+          {
+            type: 'Pokemon',
+            id: `LIST-offset=${arg?.offset}-limit=${arg?.limit}`,
+          },
         ];
       },
     }),
