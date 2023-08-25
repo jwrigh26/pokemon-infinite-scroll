@@ -1,7 +1,3 @@
-Certainly! Below is a sample README.md file for your Pokémon Infinite Scroll application. It includes the steps to set up the project locally, along with an overview, features, and a tech stack section. Feel free to adjust it according to your project's specific needs.
-
----
-
 # Pokémon Infinite Scroll 🌱
 
 > A web application that allows you to browse through Pokémon with an infinite scrolling feature.
