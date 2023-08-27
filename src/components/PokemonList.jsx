@@ -73,6 +73,7 @@ export default function PokemonList() {
                 <PokemonImage
                   src={card?.image}
                   alt={`${card?.name}-official-image`}
+                  loading="lazy"
                   onError={handleImageError} // Attach error handler
                 />
               </ImageWrapper>
