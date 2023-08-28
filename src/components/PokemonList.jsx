@@ -70,6 +70,7 @@ export default function PokemonList() {
             <CardContent>
               <PokemonCardHeader name={card?.name} id={card?.id} />
               <ImageWrapper>
+                {/* Lazy load is supported in most modern broswers */}
                 <PokemonImage
                   src={card?.image}
                   alt={`${card?.name}-official-image`}
